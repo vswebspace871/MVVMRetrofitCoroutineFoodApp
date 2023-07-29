@@ -1,9 +1,10 @@
-package com.example.mvvmretrofitcoroutinefoodapp
+package com.example.mvvmretrofitcoroutinefoodapp.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
+import com.example.mvvmretrofitcoroutinefoodapp.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
