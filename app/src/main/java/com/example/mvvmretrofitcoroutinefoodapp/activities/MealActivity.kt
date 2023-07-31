@@ -14,6 +14,7 @@ import com.example.mvvmretrofitcoroutinefoodapp.databinding.ActivityMealBinding
 import com.example.mvvmretrofitcoroutinefoodapp.pojo.Meal
 import com.example.mvvmretrofitcoroutinefoodapp.util.Constants
 import com.example.mvvmretrofitcoroutinefoodapp.viewmodel.MealViewModel
+import kotlinx.coroutines.delay
 
 class MealActivity : AppCompatActivity() {
     private lateinit var mealId: String
