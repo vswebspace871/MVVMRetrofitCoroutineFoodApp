@@ -1,5 +1,6 @@
 package com.example.mvvmretrofitcoroutinefoodapp.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -11,9 +12,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.mvvmretrofitcoroutinefoodapp.R
+import com.example.mvvmretrofitcoroutinefoodapp.activities.MealActivity
 import com.example.mvvmretrofitcoroutinefoodapp.databinding.FragmentHomeBinding
+import com.example.mvvmretrofitcoroutinefoodapp.pojo.Meal
 import com.example.mvvmretrofitcoroutinefoodapp.pojo.MealList
 import com.example.mvvmretrofitcoroutinefoodapp.retrofit.RetrofitInstance
+import com.example.mvvmretrofitcoroutinefoodapp.util.Constants.MEAL_ID
+import com.example.mvvmretrofitcoroutinefoodapp.util.Constants.MEAL_NAME
+import com.example.mvvmretrofitcoroutinefoodapp.util.Constants.MEAL_THUMB
 import com.example.mvvmretrofitcoroutinefoodapp.viewmodel.HomeViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Call
@@ -24,6 +30,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private val viewModel by viewModels<HomeViewModel>()
+    private lateinit var randomMeal : Meal
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,12 +45,25 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         getRandomMeal()
+        onRndomMealClick()
+    }
+
+    private fun onRndomMealClick() {
+        binding.randomMeal.setOnClickListener {
+            //val temp = meal.meals[0]
+            val intent = Intent(activity, MealActivity::class.java)
+            intent.putExtra(MEAL_ID, randomMeal.idMeal)
+            intent.putExtra(MEAL_NAME, randomMeal.strMeal)
+            intent.putExtra(MEAL_THUMB, randomMeal.strMealThumb)
+            startActivity(intent)
+        }
     }
 
     private fun getRandomMeal() {
         viewModel.getRandomMeal()
         viewModel.mealList.observe(viewLifecycleOwner, Observer {
             it?.let {
+                randomMeal = it
                 Glide.with(requireContext()).load(it.strMealThumb)
                     .into(binding.imgRandomMeal)
                 binding.mealName.text = it.strMeal
