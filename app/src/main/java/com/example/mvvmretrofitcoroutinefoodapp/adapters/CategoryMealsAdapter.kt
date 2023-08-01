@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mvvmretrofitcoroutinefoodapp.databinding.MealCardBinding
 import com.example.mvvmretrofitcoroutinefoodapp.databinding.MostPopularCardBinding
+import com.example.mvvmretrofitcoroutinefoodapp.pojo.Category
 import com.example.mvvmretrofitcoroutinefoodapp.pojo.MealPopular
 
 class CategoryMealsAdapter : RecyclerView.Adapter<CategoryMealsAdapter.PopularViewHolder>() {

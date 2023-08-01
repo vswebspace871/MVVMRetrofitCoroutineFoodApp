@@ -6,12 +6,8 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.mvvmretrofitcoroutinefoodapp.R
 import com.example.mvvmretrofitcoroutinefoodapp.adapters.CategoryMealsAdapter
-import com.example.mvvmretrofitcoroutinefoodapp.adapters.MostPopularAdapter
 import com.example.mvvmretrofitcoroutinefoodapp.databinding.ActivityCategoryMealsBinding
-import com.example.mvvmretrofitcoroutinefoodapp.databinding.ActivityMealBinding
 import com.example.mvvmretrofitcoroutinefoodapp.pojo.MealPopular
 import com.example.mvvmretrofitcoroutinefoodapp.util.Constants
 import com.example.mvvmretrofitcoroutinefoodapp.viewmodel.HomeViewModel
