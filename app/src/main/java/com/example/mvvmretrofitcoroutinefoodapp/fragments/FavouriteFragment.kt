@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.example.mvvmretrofitcoroutinefoodapp.activities.MainActivity
 import com.example.mvvmretrofitcoroutinefoodapp.activities.MealActivity
 import com.example.mvvmretrofitcoroutinefoodapp.adapters.FavouriteMealAdapter
@@ -19,6 +21,7 @@ import com.example.mvvmretrofitcoroutinefoodapp.db.MealDatabase
 import com.example.mvvmretrofitcoroutinefoodapp.util.Constants
 import com.example.mvvmretrofitcoroutinefoodapp.viewmodel.FavouriteViewModel
 import com.example.mvvmretrofitcoroutinefoodapp.viewmodel.FavouriteViewModelFactory
+import com.google.android.material.snackbar.Snackbar
 
 class FavouriteFragment : Fragment() {
 
@@ -44,6 +47,31 @@ class FavouriteFragment : Fragment() {
         getListofMealFromRoom()
 
         onFavMealClicked()
+
+        val itemTouchHelper = object : ItemTouchHelper.SimpleCallback(
+            ItemTouchHelper.UP or ItemTouchHelper.DOWN,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder,
+            ): Boolean {
+                return true
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                viewmodel.deleteMealFromRoomDb(favadapter.differ.currentList[position])
+                Snackbar.make(requireView(), "Meal Deleted", Snackbar.LENGTH_LONG)
+                    .setAction("Undo", View.OnClickListener {
+                        viewmodel.insertMeal(favadapter.differ.currentList[position])
+                    }).show()
+            }
+
+        }
+
+        ItemTouchHelper(itemTouchHelper).attachToRecyclerView(binding.favRecView)
 
     }
 
@@ -81,11 +109,10 @@ class FavouriteFragment : Fragment() {
                 ).show()
             }
             it?.let {
+                val myAct: MainActivity? = activity as MainActivity?
+                myAct?.increaseCount()
                 favadapter.differ.submitList(it)
 
-                /** sending list size to Main Activity and set badge number in bottom nav */
-                val myAct: MainActivity? = activity as MainActivity?
-                myAct?.increaseCount(it.size)
             }
         })
     }

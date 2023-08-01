@@ -24,4 +24,16 @@ class FavouriteViewModel(
         }
     }
 
+    fun insertMeal(meal: Meal) {
+        viewModelScope.launch(Dispatchers.IO) {
+            mealDatabase.mealdao().insertMeal(meal)
+        }
+    }
+
+    fun deleteMealFromRoomDb(meal: Meal){
+        viewModelScope.launch {
+            mealDatabase.mealdao().deleteMeal(meal)
+        }
+    }
+
 }
