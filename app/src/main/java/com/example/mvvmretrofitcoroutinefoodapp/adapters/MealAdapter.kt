@@ -1,18 +1,15 @@
 package com.example.mvvmretrofitcoroutinefoodapp.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mvvmretrofitcoroutinefoodapp.databinding.FavMealCardBinding
-import com.example.mvvmretrofitcoroutinefoodapp.databinding.MostPopularCardBinding
 import com.example.mvvmretrofitcoroutinefoodapp.pojo.Meal
-import com.example.mvvmretrofitcoroutinefoodapp.pojo.MealPopular
 
-class FavouriteMealAdapter : RecyclerView.Adapter<FavouriteMealAdapter.PopularViewHolder>() {
+class MealAdapter : RecyclerView.Adapter<MealAdapter.PopularViewHolder>() {
      lateinit var onClick : ((Meal)->Unit)
     private var mealList = ArrayList<Meal>()
 

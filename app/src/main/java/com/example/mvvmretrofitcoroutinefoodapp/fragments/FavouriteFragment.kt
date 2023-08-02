@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mvvmretrofitcoroutinefoodapp.activities.MainActivity
 import com.example.mvvmretrofitcoroutinefoodapp.activities.MealActivity
-import com.example.mvvmretrofitcoroutinefoodapp.adapters.FavouriteMealAdapter
+import com.example.mvvmretrofitcoroutinefoodapp.adapters.MealAdapter
 import com.example.mvvmretrofitcoroutinefoodapp.databinding.FragmentFavouriteBinding
 import com.example.mvvmretrofitcoroutinefoodapp.db.MealDatabase
 import com.example.mvvmretrofitcoroutinefoodapp.util.Constants
@@ -27,7 +27,7 @@ class FavouriteFragment : Fragment() {
 
     private lateinit var binding: FragmentFavouriteBinding
     private lateinit var viewmodel: FavouriteViewModel
-    private lateinit var favadapter: FavouriteMealAdapter
+    private lateinit var favadapter: MealAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -86,7 +86,7 @@ class FavouriteFragment : Fragment() {
     }
 
     private fun setupFavMealRecylerview() {
-        favadapter = FavouriteMealAdapter()
+        favadapter = MealAdapter()
         binding.favRecView.apply {
             layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
             adapter = favadapter

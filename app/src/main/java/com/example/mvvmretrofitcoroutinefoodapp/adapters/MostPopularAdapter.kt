@@ -10,6 +10,7 @@ import com.example.mvvmretrofitcoroutinefoodapp.pojo.MealPopular
 
 class MostPopularAdapter : RecyclerView.Adapter<MostPopularAdapter.PopularViewHolder>() {
      lateinit var onClick : ((MealPopular)->Unit)
+    var onLongItemClick : ((MealPopular)->Unit)?=null
     private var mealList = ArrayList<MealPopular>()
 
     fun setMealList(list: ArrayList<MealPopular>) {
@@ -37,6 +38,10 @@ class MostPopularAdapter : RecyclerView.Adapter<MostPopularAdapter.PopularViewHo
             .into(holder.binding.imgPopularMeal)
         holder.itemView.setOnClickListener {
             onClick.invoke(mealList[position])
+        }
+        holder.itemView.setOnLongClickListener {
+            onLongItemClick?.invoke(mealList[position])
+            true
         }
     }
 }

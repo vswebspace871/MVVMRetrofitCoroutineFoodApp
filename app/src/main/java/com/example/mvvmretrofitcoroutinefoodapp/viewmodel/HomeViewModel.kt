@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mvvmretrofitcoroutinefoodapp.pojo.Category
 import com.example.mvvmretrofitcoroutinefoodapp.pojo.Meal
+import com.example.mvvmretrofitcoroutinefoodapp.pojo.MealList
 import com.example.mvvmretrofitcoroutinefoodapp.pojo.MealPopular
 import com.example.mvvmretrofitcoroutinefoodapp.retrofit.RetrofitInstance
 import kotlinx.coroutines.Dispatchers
@@ -25,12 +26,43 @@ class HomeViewModel : ViewModel() {
     val mealCategoryList: LiveData<List<Category>>
         get() = _mealCategoryList
 
+    private val _bottomSheetMeal = MutableLiveData<Meal>()
+    val bottomSheetMeal: LiveData<Meal>
+        get() = _bottomSheetMeal
 
+    private val _searchedMealList = MutableLiveData<MealList>()
+    val searchedMealList: LiveData<MealList>
+        get() = _searchedMealList
+
+    private var saveStateRandomMeal : Meal? = null
     fun getRandomMeal() {
+        saveStateRandomMeal?.let {
+            _mealList.postValue(it)
+            return
+        }
         viewModelScope.launch {
             val list = RetrofitInstance.api.getRandomMeal().body()
             list?.let {
                 _mealList.postValue(it.meals[0])
+                saveStateRandomMeal = it.meals[0]
+            }
+        }
+    }
+
+    fun getMealFromSearch(search : String){
+        viewModelScope.launch {
+            val list = RetrofitInstance.api.getMealFromSearch(search).body()
+            list?.let {
+                _searchedMealList.postValue(it)
+            }
+        }
+    }
+
+    fun getMealById(id : String){
+        viewModelScope.launch {
+            val meal = RetrofitInstance.api.getMealDetail(id).body()?.meals
+            if (meal != null){
+                _bottomSheetMeal.postValue(meal[0])
             }
         }
     }
